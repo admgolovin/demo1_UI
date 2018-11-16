@@ -7,10 +7,11 @@ VIEW_SERVICE_URL = ""
 app = flask.Flask(__name__)
 SEND_DATA_FMT = {"Departament":
 			{"name": None},
-		"Team": {"depart_id": None: int,
-			"name": None: str,
-			"manager_id": None: int},
-		"Employee": {"name": None,
+		"Team": {"depart_id": None,
+			"name": None,
+			"manager_id": None},
+		"Employee": {"team_id": None,
+			"name": None,
 			"sname": None,
 			"exp": None,
 			"position": None,
@@ -19,7 +20,7 @@ SEND_DATA_FMT = {"Departament":
 
 
 def get_info():
-	reponse = requests.get(VIEW_SERVICE_URL)
+	response = requests.get(VIEW_SERVICE_URL)
 	return response.json()
 
 
@@ -34,7 +35,8 @@ def index():
 
 
 @app.route("/give-salary")
-	repsonse = requests.get(VIEW_SERVICE_URL)
+def give_salary():
+	salaries = get_info()
 
 
 @app.route("/create-departament")
@@ -42,12 +44,12 @@ def create_departament():
 	pass
 
 
-@app.route("/create_team")
+@app.route("/create-team")
 def create_team():
 	pass
 
 
-@app.route("/hire_employee")
+@app.route("/hire-employee")
 def hire_employee():
 	pass
 
