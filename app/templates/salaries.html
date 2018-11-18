@@ -5,14 +5,37 @@
     <title></title>
 </head>
 <body>
-
-<h1>Depart #1 Papuasi</h1>
+{% for departament in company %}
+<h1>Depart #{{ departament.id }} {{ departament.name }}</h1>
 <table>
-<h2>Team #1 Papuasi-atakuut</h2>
-    <table>
-
-    </table>
+    {% for team in departament.teams %}
+    <tr>
+        <td>
+            <h2>Team #{{ team.id }} {{ team.name }}</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Second name</th>
+                    <th>Position</th>
+                    <th>Experience</th>
+                    <th>Salary</th>
+                </tr>
+                {% for employee in team.employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.sname }}</td>
+                    <td>{{ employee.position }}</td>
+                    <td>{{ employee.exp }}</td>
+                    <td>{{ employee.salary }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
-
+{% endfor %}
 </body>
 </html>
