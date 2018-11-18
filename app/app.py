@@ -45,38 +45,36 @@ def give_salary():
 	return flask.render_template("salaries.html", company=[data, data])
 
 
-def	parse_form(key, form):
+def	try_send(key, form):
+	"""
+		Function parse user input and tries to send data to POST service
+	"""
 	data2sent = dict(SEND_DATA_FMT)
 	for i in SEND_DATA_FMT[key]:
 		if i not in form:
-			return False
+			return flask.make_response(("ERROR", 200))
 		data2sent[key][i] = form[i]
 	for i in data2sent:
 		if i != key:
 			data2sent[i] = None
-	return data2sent
+	#if not send_info(data2sent):
+	#		return flask.make_response(("ERROR", 200))
+	return flask.make_response(("OK", 200))
 
 
 @app.route("/create-departament", methods=['POST'])
 def create_departament():
-	print(flask.request.form)
-	data2sent = parse_form('departament', flask.request.form)
-	if data2sent:
-		# send_info(data2sent)
-		print(data2sent)
-		return flask.make_response(("OK", 200))
-	return flask.make_response(("ERROR", 200))
+	return try_send('departament', flask.request.form)
 
 
 @app.route("/create-team", methods=['POST'])
 def create_team():
-
-	return flask.make_response(("OK", 200))
+	return try_send('team', flask.request.form)
 
 
 @app.route("/hire-employee", methods=['POST'])
 def hire_employee():
-	return flask.make_response(("OK", 200))
+	return try_send('employee', flask.request.form)
 
 
 if __name__ == '__main__':
