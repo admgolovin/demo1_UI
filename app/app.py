@@ -2,7 +2,7 @@ import flask
 import requests
 import json
 
-POST_SERVICE_URL = ""
+POST_SERVICE_URL = "http://127.0.0.1:5001"
 VIEW_SERVICE_URL = ""
 app = flask.Flask(__name__)
 SEND_DATA_FMT = {"departament":
@@ -52,13 +52,13 @@ def	try_send(key, form):
 	data2sent = dict(SEND_DATA_FMT)
 	for i in SEND_DATA_FMT[key]:
 		if i not in form:
-			return flask.make_response(("ERROR", 200))
+			return flask.make_response(("ERROR", 500))
 		data2sent[key][i] = form[i]
 	for i in data2sent:
 		if i != key:
 			data2sent[i] = None
-	#if not send_info(data2sent):
-	#		return flask.make_response(("ERROR", 200))
+	if not send_info(data2sent):
+			return flask.make_response(("ERROR", 500))
 	return flask.make_response(("OK", 200))
 
 
